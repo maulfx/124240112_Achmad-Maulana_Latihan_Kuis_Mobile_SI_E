@@ -1,20 +1,34 @@
+// ==========================================
+// MODEL DATA (Entity/Class Objek Makanan)
+// ==========================================
+// Class ini digunakan sebagai blueprint / cetak biru data yang akan ditampilkan di aplikasi.
+// Jika di soal kuis temanya diganti (misal: Buku, Wisata, Rental Kendaraan),
+// cukup ubah nama class dan atribut-atribut di dalamnya sesuai kebutuhan.
 class FoodItem {
-  final String name;
-  final String description;
-  final String imageUrl;
-  final int price;
-  int quantity;
+  // Properti / atribut dari objek
+  final String name; // Nama makanan/item
+  final String description; // Deskripsi singkat makanan/item
+  final String imageUrl; // URL gambar makanan/item dari internet
+  final int price; // Harga satuan (menggunakan tipe data int agar mudah dihitung)
+  int quantity; // Jumlah porsi/item yang dipesan (bukan final karena nilainya bisa berubah)
 
+  // Constructor: digunakan untuk membuat instance/objek baru dari FoodItem
   FoodItem({
     required this.name,
     required this.description,
     required this.imageUrl,
     required this.price,
-    this.quantity = 0,
+    this.quantity = 0, // Default nilai quantity awal adalah 0
   });
 
+  // Getter: Menghitung total harga secara otomatis (quantity * harga satuan)
   int get totalPrice => quantity * price;
 
+  // ==========================================
+  // DUMMY DATA / DATA AWAL
+  // ==========================================
+  // Method static ini menyediakan daftar data awal (mock data) untuk ditampilkan di ListView.
+  // Kamu bisa menambah, menghapus, atau mengganti item di dalam List ini.
   static List<FoodItem> getInitialData() {
     return [
       FoodItem(
@@ -56,6 +70,11 @@ class FoodItem {
   }
 }
 
+// ==========================================
+// FUNGSI FORMATTER RUPIAH
+// ==========================================
+// Fungsi helper untuk mengubah angka int menjadi format mata uang Rupiah (contoh: 15000 -> "Rp 15.000").
+// Menggunakan Regular Expression (RegExp) untuk menyisipkan titik setiap 3 digit angka.
 String formatRupiah(int number) {
   return 'Rp ${number.toString().replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
